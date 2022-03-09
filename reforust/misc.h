@@ -6,6 +6,7 @@
 #include <memory>
 #include <string_view>
 #include <chrono>
+#include <vector>
 
 std::uint32_t get_process_id(const std::string& name)
 {
@@ -45,6 +46,17 @@ namespace memory {
 		T buffer{ };
 		// your reading function
 		return buffer;
+	}
+
+	template <typename t>
+	t read_chain(uintptr_t address, std::vector<uintptr_t> chain)
+	{
+		uintptr_t cur_read = address;
+
+		for (int i = 0; i < chain.size() - 1; ++i)
+			cur_read = read<uintptr_t>(cur_read + chain[i]);
+
+		return read<t>(cur_read + chain[chain.size() - 1]);
 	}
 
 	template <typename T>
