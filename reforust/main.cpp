@@ -1,20 +1,21 @@
 #include "misc.h"
-#include "offsets.h"
+// // // // // // // //
+bool adminmode = false;
+// // // // // // // //
 
-int main() {
+int main() 
+{
 	auto process = get_process_id("RustClient.exe");
 	if (process) {
-		        auto assembly_base_addr = get_base_address("GameAssembly.dll"); 
-			auto localplayer1 = memory::read<uintptr_t>(assembly_base_addr + basenetworkable);
-			auto localplayer2 = memory::read<uintptr_t>(localplayer1 + 0xB8);
-			auto localplayer3 = memory::read<uintptr_t>(localplayer2 + 0x0);
-			auto localplayer4 = memory::read<uintptr_t>(localplayer3 + 0x10);
-			auto localplayer5 = memory::read<uintptr_t>(localplayer4 + 0x28);
-			auto localplayer6 = memory::read<uintptr_t>(localplayer5 + 0x18);
-			auto localplayer7 = memory::read<uintptr_t>(localplayer6 + 0x20);
-		        while (true) {
-			int flag = memory::read<int>(localplayer7 + playerflags);
-			memory::write<int>(playerflags, (flag |= admin));
+		auto assembly_base_address = get_base_address("GameAssembly.dll");
+		auto assembly_base_offsets = memory::read<uintptr_t>(assembly_base_address + 0x3171be0);
+		auto assembly_main_offsets = memory::read_chain<uintptr_t>(assembly_base_offsets, { 0xb8, 0x0, 0x10, 0x28, 0x18, 0x20 });
+		while (true)
+		{
+			if (adminmode) {
+				int flag = memory::read<int>(assembly_main_offsets + 0x678);
+				memory::write<int>(0x678, (flag |= 4));
+			}
 		}
 	}
 }
