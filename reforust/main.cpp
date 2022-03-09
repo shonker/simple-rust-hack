@@ -4,8 +4,7 @@
 int main() {
 	auto process = get_process_id("RustClient.exe");
 	if (process) {
-		 auto process_base_addr = get_base_address("RustClient.exe");
-		 auto assembly_base_addr = get_base_address("GameAssembly.dll"); 
+		        auto assembly_base_addr = get_base_address("GameAssembly.dll"); 
 			auto localplayer1 = memory::read<uintptr_t>(assembly_base_addr + basenetworkable);
 			auto localplayer2 = memory::read<uintptr_t>(localplayer1 + 0xB8);
 			auto localplayer3 = memory::read<uintptr_t>(localplayer2 + 0x0);
