@@ -2,4 +2,4 @@
 
 A simple rust hack source code
 
-outdated
+updated 30.09.2022
