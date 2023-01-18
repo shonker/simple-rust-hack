@@ -1,5 +1,7 @@
 # Simple-Rust-Hack
 
-A simple rust hack source code
+* A simple rust hack source code
 
-updated 30.09.2022
+* new chain 
+* 
+updated 18.01.2023
